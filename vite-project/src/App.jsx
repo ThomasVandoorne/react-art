@@ -7,43 +7,90 @@ const day = { backgroundColor: "lightblue" };
 const night = { backgroundColor: "gray" };
 
 function App() {
-  const [radius, setRadius] = useState(5);
   const [color, setColor] = useState(day);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [number, setNumber] = useState(5);
-  console.log(number);
+  const [style, setStyle] = useState({
+    radius: 5,
+    red: 255,
+    green: 0,
+    blue: 0,
+  });
+
+  const handleChangeRadius = (e) => {
+    setStyle({
+      ...style,
+      radius: e.target.value,
+    });
+  };
+
+  const handleChangeRed = (e) => {
+    setStyle({
+      ...style,
+      red: e.target.value,
+    });
+  };
+  const handleChangeGreen = (e) => {
+    setStyle({
+      ...style,
+      green: e.target.value,
+    });
+  };
+  const handleChangeBlue = (e) => {
+    setStyle({
+      ...style,
+      blue: e.target.value,
+    });
+  };
 
   const handleChangeStroke = (e) => {
     setNumber(e.target.value);
   };
 
-  const handleChangeRadius = (e) => {
-    setRadius(e.target.value);
-  };
-
   return (
     <div className="App">
-      <Slider
-        max={10}
-        label="Radius"
-        value={radius}
-        onValueChange={handleChangeRadius}
-      />
+      <h1>Customize your Clown</h1>
 
+      <div>
+        <h2>Eyes</h2>
+        <Slider
+          min={2}
+          max={5}
+          label="Pupil Size"
+          onValueChange={handleChangeRadius}
+        />
+        <input
+          label="Iris size"
+          type="number"
+          min="1"
+          max="5"
+          value={number}
+          onChange={handleChangeStroke}
+        />
+      </div>
+      <div>
+        <h2>Nose</h2>
+        <Slider max={255} label="RED" onValueChange={handleChangeRed} />
+        <br />
+        <Slider max={255} label="GREEN" onValueChange={handleChangeGreen} />
+        <br />
+        <Slider max={255} label="BLUE" onValueChange={handleChangeBlue} />
+      </div>
       <div className="canvas" style={color}>
-        {visible === true && <Drawing radius={radius} strokeWidth={number} />}
+        {visible === true && (
+          <Drawing
+            radius={style.radius}
+            strokeWidth={number}
+            red={style.red}
+            green={style.green}
+            blue={style.blue}
+          />
+        )}
       </div>
 
       <button onClick={() => setColor(night)}>night</button>
       <button onClick={() => setColor(day)}>day</button>
       <button onClick={() => setVisible(!visible)}>Circle</button>
-      <input
-        type="number"
-        min="1"
-        max="10"
-        value={number}
-        onChange={handleChangeStroke}
-      />
     </div>
   );
 }
