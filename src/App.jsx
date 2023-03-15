@@ -2,25 +2,32 @@ import { useState } from "react";
 import "./App.css";
 import Slider from "./components/Slider";
 import Drawing from "./components/Drawing";
+import ColorPicker from "./components/ColorPicker";
 
-const day = { backgroundColor: "lightblue" };
+const day = { backgroundColor: "white" };
 const night = { backgroundColor: "black" };
 
 function App() {
   const [color, setColor] = useState(day);
-  const [visible, setVisible] = useState(true);
-  const [number, setNumber] = useState(5);
+  const [visible, setVisible] = useState(false);
+  const [number, setNumber] = useState(1.5);
+  const [opacity, setOpacity] = useState(0);
+  const [haircolor, setHaircolor] = useState("orange");
+  const [eyecolor, setEyecolor] = useState("red");
   const [rect, setRect] = useState({
-    x: 0,
-    y: 0,
     width: 20,
   });
 
+  const handleSetHaircolor = (e) => {
+    setHaircolor(e);
+  };
+
+  const handleSetEyecolor = (e) => {
+    setEyecolor(e);
+  };
   const [style, setStyle] = useState({
     radius: 5,
     red: 255,
-    green: 0,
-    blue: 0,
   });
 
   const handleChangeRect = (e) => {
@@ -28,6 +35,10 @@ function App() {
       ...rect,
       width: 100 / e.target.value,
     });
+  };
+
+  const handleChangeOpacity = (e) => {
+    opacity === 0 ? setOpacity(1) : setOpacity(0);
   };
 
   const handleChangeRadius = (e) => {
@@ -43,18 +54,6 @@ function App() {
       red: e.target.value,
     });
   };
-  const handleChangeGreen = (e) => {
-    setStyle({
-      ...style,
-      green: e.target.value,
-    });
-  };
-  const handleChangeBlue = (e) => {
-    setStyle({
-      ...style,
-      blue: e.target.value,
-    });
-  };
 
   const handleChangeStroke = (e) => {
     setNumber(e.target.value);
@@ -62,55 +61,63 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Customize your Clown</h1>
-
       <div>
-        <h2>Eyes</h2>
-        <Slider
-          min={2}
-          max={5}
-          label="Pupil Size"
-          onValueChange={handleChangeRadius}
-        />
-        <input
-          label="Iris size"
-          type="number"
-          min="1"
-          max="5"
-          value={number}
-          onChange={handleChangeStroke}
-        />
-      </div>
+        <h1>Customize your Clownwallpaper</h1>
 
-      <div>
-        <h2>Nose</h2>
-        <Slider max={255} label="RED" onValueChange={handleChangeRed} />
-        <br />
-        <Slider max={255} label="GREEN" onValueChange={handleChangeGreen} />
-        <br />
-        <Slider max={255} label="BLUE" onValueChange={handleChangeBlue} />
-      </div>
-
-      <div className="canvas" style={color}>
-        {visible === true && (
-          <Drawing
-            radius={style.radius}
-            strokeWidth={number}
-            red={style.red}
-            green={style.green}
-            blue={style.blue}
-            x={rect.x}
-            y={rect.y}
-            width={rect.width}
+        <div>
+          <h2>Eyes</h2>
+          <Slider
+            min={2}
+            max={5}
+            label="Pupil Size"
+            onValueChange={handleChangeRadius}
           />
-        )}
+          <input
+            label="Iris size"
+            type="number"
+            min="1"
+            step="0.1"
+            max="2.5"
+            value={number}
+            onChange={handleChangeStroke}
+          />
+          <ColorPicker onColorChange={handleSetEyecolor} />
+        </div>
+
+        <div>
+          <h2>Nose</h2>
+          <button
+            onClick={() => {
+              setVisible(!visible);
+              handleChangeOpacity();
+            }}
+          >
+            Clownnose
+          </button>
+          <br />
+          {visible === true && (
+            <Slider max={255} label="Redness" onValueChange={handleChangeRed} />
+          )}
+        </div>
+        <h2>Tent</h2>
+        <input type="number" min="1" max="5" onChange={handleChangeRect} />
+        <h2>Extra</h2>
+        <button onClick={() => setColor(night)}>night</button>
+        <button onClick={() => setColor(day)}>day</button>
+
+        <ColorPicker onColorChange={handleSetHaircolor} />
       </div>
-
-      <input type="number" min="1" max="5" onChange={handleChangeRect} />
-
-      <button onClick={() => setColor(night)}>night</button>
-      <button onClick={() => setColor(day)}>day</button>
-      <button onClick={() => setVisible(!visible)}>Circle</button>
+      <div className="canvas" style={color}>
+        <Drawing
+          radius={style.radius}
+          strokeWidth={number}
+          red={style.red}
+          width={rect.width}
+          opacity={opacity}
+          haircolor={haircolor}
+          eyecolor={eyecolor}
+        />
+      </div>
     </div>
   );
 }
