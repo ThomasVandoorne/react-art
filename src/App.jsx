@@ -3,19 +3,21 @@ import "./App.css";
 import Slider from "./components/Slider";
 import Drawing from "./components/Drawing";
 import ColorPicker from "./components/ColorPicker";
-
-const day = { backgroundColor: "white" };
-const night = { backgroundColor: "black" };
+import Time from "./components/Time";
 
 function App() {
-  const [color, setColor] = useState(day);
+  const [color, setColor] = useState("white");
   const [visible, setVisible] = useState(false);
-  const [number, setNumber] = useState(1.5);
+  const [stroke, setStroke] = useState(1.5);
   const [opacity, setOpacity] = useState(0);
   const [haircolor, setHaircolor] = useState("orange");
   const [eyecolor, setEyecolor] = useState("red");
   const [rect, setRect] = useState({
     width: 20,
+  });
+  const [slider, setSlider] = useState({
+    radius: 5,
+    red: 255,
   });
 
   const handleSetHaircolor = (e) => {
@@ -25,10 +27,6 @@ function App() {
   const handleSetEyecolor = (e) => {
     setEyecolor(e);
   };
-  const [style, setStyle] = useState({
-    radius: 5,
-    red: 255,
-  });
 
   const handleChangeRect = (e) => {
     setRect({
@@ -42,26 +40,27 @@ function App() {
   };
 
   const handleChangeRadius = (e) => {
-    setStyle({
-      ...style,
+    setSlider({
+      ...slider,
       radius: e.target.value,
     });
   };
 
   const handleChangeRed = (e) => {
-    setStyle({
-      ...style,
+    setSlider({
+      ...slider,
       red: e.target.value,
     });
   };
 
   const handleChangeStroke = (e) => {
-    setNumber(e.target.value);
+    setStroke(e.target.value);
   };
 
+  console.log(color);
   return (
     <div className="App">
-      <div>
+      <div className="App__left">
         <h1>Customize your Clownwallpaper</h1>
 
         <div>
@@ -72,15 +71,19 @@ function App() {
             label="Pupil Size"
             onValueChange={handleChangeRadius}
           />
+          <br />
+          <label>Iris Size</label>
           <input
             label="Iris size"
             type="number"
             min="1"
             step="0.1"
             max="2.5"
-            value={number}
+            value={stroke}
             onChange={handleChangeStroke}
           />
+          <br />
+          <label>eyecolor</label>
           <ColorPicker onColorChange={handleSetEyecolor} />
         </div>
 
@@ -99,19 +102,26 @@ function App() {
             <Slider max={255} label="Redness" onValueChange={handleChangeRed} />
           )}
         </div>
-        <h2>Tent</h2>
-        <input type="number" min="1" max="5" onChange={handleChangeRect} />
-        <h2>Extra</h2>
-        <button onClick={() => setColor(night)}>night</button>
-        <button onClick={() => setColor(day)}>day</button>
-
-        <ColorPicker onColorChange={handleSetHaircolor} />
+        <div>
+          <h2>Tent</h2>
+          <label>Tentlines</label>
+          <input type="number" min="1" max="5" onChange={handleChangeRect} />
+        </div>
+        <div>
+          <h2>Extra</h2>
+          <Time setColor={setColor} time="white" timeText="day" />
+          <Time setColor={setColor} time="black" timeText="night" />
+          <br />
+          <br />
+          <label>Hair</label>
+          <ColorPicker onColorChange={handleSetHaircolor} />
+        </div>
       </div>
-      <div className="canvas" style={color}>
+      <div className="canvas" style={{ backgroundColor: color.time }}>
         <Drawing
-          radius={style.radius}
-          strokeWidth={number}
-          red={style.red}
+          radius={slider.radius}
+          strokeWidth={stroke}
+          red={slider.red}
           width={rect.width}
           opacity={opacity}
           haircolor={haircolor}
