@@ -4,18 +4,31 @@ import Slider from "./components/Slider";
 import Drawing from "./components/Drawing";
 
 const day = { backgroundColor: "lightblue" };
-const night = { backgroundColor: "gray" };
+const night = { backgroundColor: "black" };
 
 function App() {
   const [color, setColor] = useState(day);
   const [visible, setVisible] = useState(true);
   const [number, setNumber] = useState(5);
+  const [rect, setRect] = useState({
+    x: 0,
+    y: 0,
+    width: 20,
+  });
+
   const [style, setStyle] = useState({
     radius: 5,
     red: 255,
     green: 0,
     blue: 0,
   });
+
+  const handleChangeRect = (e) => {
+    setRect({
+      ...rect,
+      width: 100 / e.target.value,
+    });
+  };
 
   const handleChangeRadius = (e) => {
     setStyle({
@@ -68,6 +81,7 @@ function App() {
           onChange={handleChangeStroke}
         />
       </div>
+
       <div>
         <h2>Nose</h2>
         <Slider max={255} label="RED" onValueChange={handleChangeRed} />
@@ -76,6 +90,7 @@ function App() {
         <br />
         <Slider max={255} label="BLUE" onValueChange={handleChangeBlue} />
       </div>
+
       <div className="canvas" style={color}>
         {visible === true && (
           <Drawing
@@ -84,9 +99,14 @@ function App() {
             red={style.red}
             green={style.green}
             blue={style.blue}
+            x={rect.x}
+            y={rect.y}
+            width={rect.width}
           />
         )}
       </div>
+
+      <input type="number" min="1" max="5" onChange={handleChangeRect} />
 
       <button onClick={() => setColor(night)}>night</button>
       <button onClick={() => setColor(day)}>day</button>
