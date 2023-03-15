@@ -7,7 +7,7 @@ const Slider = ({ onValueChange, value, max, min, label }) => {
         min={min}
         max={max}
         value={value}
-        onChange={(e) => onValueChange(parseInt(e.target.value, 10))}
+        onChange={onValueChange}
       />
       <span>{value}</span>
     </label>
