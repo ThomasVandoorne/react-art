@@ -55,6 +55,7 @@ const Drawing = ({
         height="100"
         opacity="0.9"
       />
+<<<<<<< HEAD
       ;{/* Neck */}
       <rect fill="lightgray" x="40" y="65" width="20" height="20" />
       {/* Body */}
@@ -62,6 +63,17 @@ const Drawing = ({
       <circle fill="white" cx="50" cy="50" r="20" />
       {/* Mouth */}
       <rect fill="red" x="42" y="65" width="16" height="2" opacity="0.9" />
+=======
+
+      ;{/* Body */}
+      <rect fill="lightgray" x="40" y="65" width="20" height="20" />
+      <circle fill="orange" cx="50" cy="100" r="27" />
+      <circle fill="white" cx="50" cy="50" r="20" />
+
+      {/* Mouth */}
+      <rect fill="red" x="42" y="65" width="16" height="2" opacity="0.9" />
+      
+>>>>>>> develop
       {/* Eyes */}
       <circle
         strokeWidth="2"
@@ -99,7 +111,12 @@ const Drawing = ({
       <circle fill={haircolor} cx="65" cy="40" r="8" />
       <circle fill={haircolor} cx="33" cy="40" r="7.5" />
       {/* Nose */}
+<<<<<<< HEAD
       <polygon fill="lightgray" points="50 50, 55 63, 45 63" />
+=======
+      <polygon fill="lightgray" points="50 50, 55 60, 45 60" />
+      <circle fill="lightgray" cx="50" cy="60" r="5" />
+>>>>>>> develop
       <circle
         fill={`rgb(${red},0, 0)`}
         cx="50"

@@ -2,9 +2,21 @@
   width: 50vw;
   height: 50vw;
   background: #000;
+<<<<<<< HEAD
 }
 .App {
   width: 100vw;
   display: grid;
   grid-template-columns: 1fr 1fr;
+=======
+}
+.App {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.App__left {
+  margin-left: 30px;
+>>>>>>> develop
 }

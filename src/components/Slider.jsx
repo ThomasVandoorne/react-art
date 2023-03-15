@@ -9,7 +9,6 @@ const Slider = ({ onValueChange, value, max, min, label }) => {
         value={value}
         onChange={onValueChange}
       />
-      <span>{value}</span>
     </label>
   );
 };
