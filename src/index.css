@@ -67,8 +67,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-.canvas {
-  width: 30vw;
-  height: 30vw;
-  background: #000;
-}
+
