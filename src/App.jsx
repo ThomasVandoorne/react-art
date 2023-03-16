@@ -1,5 +1,5 @@
-import { useState } from "react";
 import "./App.css";
+import { useState } from "react";
 import Slider from "./components/Slider";
 import Drawing from "./components/Drawing";
 import ColorPicker from "./components/ColorPicker";
